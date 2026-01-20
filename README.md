@@ -1,4 +1,4 @@
-# 🎬 Video Generator Plugin
+# 🎬 Video Generator Plugin（视频生成插件）
 
 <div align="center">
 
@@ -8,7 +8,7 @@
 
 **支持多服务商的 AI 视频生成插件，让你的 MaiBot 拥有文生视频、图生视频能力**
 
-[功能特性](#-功能特性) • [快速开始](#-快速开始) • [使用指南](#-使用指南) • [配置说明](#-配置说明) • [常见问题](#-常见问题)
+[快速开始](#-快速开始) • [使用指南](#-使用指南) • [配置说明](#-配置说明) • [常见问题](#-常见问题)
 
 </div>
 
@@ -70,14 +70,14 @@ pip install -r requirements.txt
 ```
 
 ## 配置 API Key
-方式一：通过 WebUI 配置（推荐）
+**方式一：通过 WebUI 配置（推荐）**
 
 - 启动 MaiBot
 - 打开 WebUI 管理面板
 - 进入「插件管理」→「视频生成插件」→「配置」
 - 在「模型管理」标签页填写 API Key
 
-方式二：编辑配置文件
+**方式二：编辑配置文件**
 
 编辑 config.toml 文件：
 ```bash
@@ -93,47 +93,47 @@ model = "doubao-seedance-1-5-pro-251215"
 
 
 ## 获取 API Key
-
-服务商	获取地址	说明
-火山引擎	console.volcengine.com	需开通「豆包大模型」服务
-阿里云	dashscope.console.aliyun.com	需开通「通义万相」服务
-智谱	open.bigmodel.cn	需开通「CogVideoX」服务
+- 火山引擎	console.volcengine.com	需开通「豆包大模型」服务
+- 阿里云	dashscope.console.aliyun.com	需开通「通义万相」服务
+- 智谱	open.bigmodel.cn	需开通「CogVideoX」服务
 
 
 ## 📖 使用指南
 
 ### 基础命令
-/vg <提示词>              文生视频（有图时自动图生视频）
-/vg help                  显示帮助信息
+- /vg <提示词>              文生视频（有图时自动图生视频）
+- /vg help                  显示帮助信息
 ### 图生视频模式
-/vg <提示词>              自动检测最近图片（首帧模式）
-/vg f <提示词>            强制首帧模式
-/vg r <提示词>            尾帧模式
-/vg fr <提示词>           首尾帧模式（需要2张图片）
+- /vg <提示词>              自动检测最近图片（首帧模式）
+- /vg f <提示词>            强制首帧模式
+- /vg r <提示词>            尾帧模式
+- /vg fr <提示词>           首尾帧模式（需要2张图片）
+
 ### 参数设置
-/vg 720p <提示词>         指定分辨率（480p/720p/1080p/4k）
-/vg 720p 30 <提示词>      分辨率 + 帧率
-/vg 720p 30 10 <提示词>   分辨率 + 帧率 + 时长（秒）
+- /vg 720p <提示词>         指定分辨率（480p/720p/1080p/4k）
+- /vg 720p 30 <提示词>      分辨率 + 帧率
+- /vg 720p 30 10 <提示词>   分辨率 + 帧率 + 时长（秒）
+
 ### 背景音乐
-/vg mu <提示词>           添加背景音乐（默认风格）
-/vg mu50 <提示词>         指定音量（0-100）
-/vg cinematic <提示词>    指定音乐风格
+- /vg mu <提示词>           添加背景音乐（默认风格）
+- /vg mu50 <提示词>         指定音量（0-100）
+- /vg cinematic <提示词>    指定音乐风格
 
 #### 支持的音乐风格：
 cinematic（电影感）、upbeat（欢快）、calm（平静）、dramatic（戏剧性）、romantic（浪漫）、sad（悲伤）、mysterious（神秘）、energetic（活力）、peaceful（宁静）、epic（史诗）
 
 ### 查询命令
-/vg c                     查看当前配置
-/vg m                     查看可用模型
-/vg t                     查看预设模板
-/vg s                     查看任务状态
-/vg y                     查看音乐风格
-/vg caps                  查看当前模型能力
-/vg caps <模型ID>         查看指定模型能力
+- /vg c                     查看当前配置
+- /vg m                     查看可用模型
+- /vg t                     查看预设模板
+- /vg s                     查看任务状态
+- /vg y                     查看音乐风格
+- /vg caps                  查看当前模型能力
+- /vg caps <模型ID>         查看指定模型能力
 
 ### 管理命令（需管理员权限）
-/vg w <模型ID>            切换模型
-/vg d <任务ID>            取消任务
+- /vg w <模型ID>            切换模型
+- /vg d <任务ID>            取消任务
 
 
 ## 🎬 使用示例
@@ -162,38 +162,38 @@ cinematic（电影感）、upbeat（欢快）、calm（平静）、dramatic（�
 video_generator_plugin/
 ├── config.toml          # 主配置文件
 
-**主要配置项**
-插件设置 [plugin]
-配置项	类型	默认值	说明
-enabled	bool	true	是否启用插件
+### 主要配置项
+**插件设置 [plugin]**
+- 配置项       类型       默认值       说明
+- enabled    bool       true       是否启用插件
 
 **管理员设置 [admin]**
-配置项	类型	默认值	说明
-admin_users	list	[]	管理员 QQ 号列表
+- 配置项                     类型              默认值              说明
+- admin_users              list                 []              管理员 QQ 号列表
 
 **生成设置 [generation]**
-配置项	类型	默认值	说明
-default_model	string	"model1"	默认使用的模型
-default_resolution	string	"720p"	默认分辨率
-default_fps	int	24	默认帧率
-default_duration	int	5	默认时长（秒）
+配置项                            类型              默认值                说明
+- default_model             string              "model1"       默认使用的模型
+- default_resolution       string              "720p"           默认分辨率
+- default_fps                   int                 24                  默认帧率
+- default_duration           int                 5                   默认时长（秒）
 
 **队列设置 [queue]**
-配置项	类型	默认值	说明
-max_queue_size	int	10	最大队列长度
-task_timeout	int	600	任务超时时间（秒）
-poll_interval	int	5	基础轮询间隔（秒）
+- 配置项                     类型              默认值                说明
+- max_queue_size       int                 10               最大队列长度
+- task_timeout            int                600              任务超时时间（秒）
+- poll_interval             int                  5               基础轮询间隔（秒）
 
 **模型配置 [models.modelX]**
-配置项	类型	说明
-name	string	模型显示名称
-base_url	string	API 地址
-api_key	string	API 密钥
-format	string	API 格式（volcengine/aliyun/zhipu/openai）
-model	string	模型标识符
-default_resolution	string	该模型默认分辨率
-default_duration	int	该模型默认时长
-support_img2video	bool	是否支持图生视频
+- 配置项                               类型                            说明
+- name	                        string                模型显示名称
+- base_url	                        string                  API 地址
+- api_key                             string                 API 密钥
+- format                              string                 API 格式（volcengine/aliyun/zhipu/openai）
+- model                              string                 模型标识符
+- default_resolution            string                  该模型默认分辨率
+- default_duration                 int                    该模型默认时长
+- support_img2video           bool                  是否支持图生视频
 
 
 ## ❓ 常见问题
@@ -241,9 +241,15 @@ support_img2video = true
 本项目采用 GNU General Public License v3.0 许可证。
 
 ## 🙏 致谢
-MaiBot - 优秀的 AI 机器人框架
-火山引擎、阿里云、智谱 - 提供强大的视频生成 API
-如果这个插件对你有帮助，请给个 ⭐ Star 支持一下！
+- MaiBot - 优秀的 AI 机器人框架
+
+- 火山引擎、阿里云、智谱 - 提供强大的视频生成 API
+
+- 如果这个插件对你有帮助，请给个 ⭐ Star 支持一下！
+
+
+
+
 
 
 Made with ❤️ by 三花
