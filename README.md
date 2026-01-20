@@ -143,17 +143,17 @@ cinematic（电影感）、upbeat（欢快）、calm（平静）、dramatic（�
 - 第一步：发送两张图片并输入命令
 先在聊天中发送两张图片（第一张为首帧，第二张为尾帧），然后发送命令：
 
-<img src="./docx/images/step1_submit.jpg" alt="步骤1 - 提交任务" width="500">
+<img src="./docs/images/step1_submit.jpg" alt="步骤1 - 提交任务" width="500">
 - 第二步：查看生成进度
 
 使用 /vg s 命令查看任务状态和生成进度：
 
-<img src="./docx/images/step2_progress.jpg" alt="步骤2 - 查看进度" width="500">
+<img src="./docs/images/step2_progress.jpg" alt="步骤2 - 查看进度" width="500">
 - 第三步：获取生成结果
 
 视频生成完成后会自动发送到聊天中：
 
-<img src="./docx/images/step3_result.jpg" alt="步骤3 - 生成完成" width="500">
+<img src="./docs/images/step3_result.jpg" alt="步骤3 - 生成完成" width="500">
 
 
 ## ⚙️ 配置说明
