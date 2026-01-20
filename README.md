@@ -4,7 +4,7 @@
 
 ![Version](https://img.shields.io/badge/version-1.0.0-blue.svg)
 ![License](https://img.shields.io/badge/license-GPL--3.0-green.svg)
-![MaiBot](https://img.shields.io/badge/MaiBot-0.7.0+-orange.svg)
+![MaiBot](https://img.shields.io/badge/MaiBot-0.12.0+-orange.svg)
 
 **支持多服务商的 AI 视频生成插件，让你的 MaiBot 拥有文生视频、图生视频能力**
 
@@ -231,7 +231,7 @@ support_img2video = true
 
 ```
 ### 我想说
-**第一次弄，很史我知道，有问题先问问AI，我代码都是claude-opus-4-5生成的，别告诉我你不会用AI，真不会用打屁屁。**
+**第一次弄，很史我知道，有问题先问问AI，我代码都是claude-opus-4-5生成的，别告诉我你不会用AI，真不会用打屁屁。最后感谢一下耐心解答我那些飞舞问题的大家，我人真的麻了，有了这次经验，后面也许再弄就会顺手一点吧？“憋笑”。**
 
 
 ## 🤝 贡献
