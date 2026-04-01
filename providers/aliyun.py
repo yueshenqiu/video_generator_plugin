@@ -1,4 +1,4 @@
-"""阿里云 DashScope 视频生成服务商 - HTTP 实现"""
+"""阿里云 DashScope 视频生成服务商- HTTP实现"""
 
 from typing import Dict, Any, Optional, Tuple
 
@@ -16,7 +16,7 @@ class AliyunProvider(BaseProvider):
     PROVIDER_NAME = "aliyun"
     CAPABILITIES = ALIYUN_CAPABILITIES
 
-    # API 端点
+    # API端点
     ENDPOINT_CREATE = "/services/aigc/video-generation/video-synthesis"
     ENDPOINT_GET = "/tasks/{task_id}"
 
@@ -35,8 +35,7 @@ class AliyunProvider(BaseProvider):
         resolution_map = {
             "480p": "480P",
             "720p": "720P",
-            "1080p": "1080P",
-        }
+            "1080p": "1080P",}
         return resolution_map.get(resolution.lower(), resolution.upper())
 
     async def create_task(
@@ -96,7 +95,11 @@ class AliyunProvider(BaseProvider):
         # 音频
         if audio_url:
             request_body["input"]["audio_url"] = audio_url
+            request_body["parameters"]["audio"] = True
             logger.debug("[AliyunProvider] 添加自定义音频")
+        elif kwargs.get("generate_audio", False):
+            request_body["parameters"]["audio"] = True
+            logger.debug("[AliyunProvider] 启用自动音频生成")
         
         # 水印
         if "watermark" in kwargs:
@@ -106,7 +109,7 @@ class AliyunProvider(BaseProvider):
         if kwargs.get("negative_prompt"):
             request_body["input"]["negative_prompt"] = kwargs["negative_prompt"]
         
-        # 多镜头叙事（wan2.6 支持）
+        # 多镜头叙事（wan2.6支持）
         if kwargs.get("multi_shot") and "wan2.6" in model:
             request_body["parameters"]["shot_type"] = "multi"
 
@@ -116,12 +119,12 @@ class AliyunProvider(BaseProvider):
             # 阿里云需要特殊请求头来启用异步
             extra_headers = {"X-DashScope-Async": "enable"}
             response = await self._client.post(
-                self.ENDPOINT_CREATE, 
+                self.ENDPOINT_CREATE,
                 request_body,
                 extra_headers=extra_headers
             )
             
-            # 阿里云响应格式
+            #阿里云响应格式
             output = response.get("output", {})
             task_id = output.get("task_id", "")
             
@@ -180,7 +183,7 @@ class AliyunProvider(BaseProvider):
                 
             elif status == "FAILED":
                 result["message"] = output.get("message", "生成失败")
-                # 尝试从 code 获取更多信息
+                #尝试从 code 获取更多信息
                 code = output.get("code", "")
                 if code:
                     result["message"] = f"{code}: {result['message']}"

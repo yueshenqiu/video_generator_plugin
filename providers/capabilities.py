@@ -178,6 +178,30 @@ VOLCENGINE_CAPABILITIES = ProviderCapabilities(
     display_name="火山引擎",
     supports_cancel=True,
     models={
+        "doubao-seedance-2-0-260128": ModelCapabilities(
+            model_id="ddoubao-seedance-2-0-260128",
+            display_name="豆包 Seedance 2.0",
+            video_features=[
+                VideoFeature.TEXT_TO_VIDEO,
+                VideoFeature.IMAGE_TO_VIDEO,
+                VideoFeature.FIRST_FRAME,
+                VideoFeature.LAST_FRAME,
+            ],
+            audio_features=[
+                AudioFeature.BACKGROUND_MUSIC,
+                AudioFeature.AUTO_SOUND,
+            ],
+            resolution=ResolutionSupport(
+                presets=["720p", "1080p"],
+                aspect_ratios=["16:9", "9:16", "1:1"],
+            ),
+            duration=DurationSupport(
+                min_seconds=5,
+                max_seconds=15,
+                allowed_values=[5, 15],
+            ),
+            fps=FpsSupport(allowed_values=[24], default=24),
+        ),
         "doubao-seedance-1-5-pro-251215": ModelCapabilities(
             model_id="doubao-seedance-1-5-pro-251215",
             display_name="豆包 Seedance 1.5 Pro",
@@ -197,8 +221,8 @@ VOLCENGINE_CAPABILITIES = ProviderCapabilities(
             ),
             duration=DurationSupport(
                 min_seconds=5,
-                max_seconds=10,
-                allowed_values=[5, 10],
+                max_seconds=12,
+                allowed_values=[5, 12],
             ),
             fps=FpsSupport(allowed_values=[24], default=24),
         ),

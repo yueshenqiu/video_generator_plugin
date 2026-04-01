@@ -32,6 +32,7 @@
 | 🔥 火山引擎（豆包） | ✅ | ✅ | ✅ | ✅ |
 | ☁️ 阿里云（通义万相） | ✅ | ✅ | ❌ | ✅ |
 | 🧠 智谱（CogVideoX） | ✅ | ✅ | ✅ | ✅ |
+ 🟣 可灵（Kling） | ✅ | ✅ | ✅ | 部分模型支持 |
 | 🔌 OpenAI 兼容 | ✅ | ✅ | - | - |
 
 ### 🛠️ 高级特性
@@ -85,7 +86,7 @@ pip install -r requirements.txt
 name = "豆包视频生成"
 api_key = "your-api-key-here"  # 填写你的 API Key
 format = "volcengine"
-model = "doubao-seedance-1-5-pro-251215"
+model = "doubao-seedance-2-0-260128"
 
 ```
 #### 重启 MaiBot
@@ -230,8 +231,12 @@ model = "model-name"
 support_img2video = true
 
 ```
-### 我想说
-**第一次弄，很史我知道，有问题先问问AI，我代码都是claude-opus-4-5生成的，别告诉我你不会用AI，真不会用打屁屁。最后感谢一下耐心解答我那些飞舞问题的大家，我人真的麻了，有了这次经验，后面也许再弄就会顺手一点吧？“憋笑”。**
+### 更新简介
+#### 2.1.2
+新增**可灵kling**服务商
+新增火山引擎豆包视频生成模型**doubao-seedance-2-0**的完美适配（假的）
+修复部分参数传递不正确等已知BUG
+后续会慢慢增加视频延长，音频等功能
 
 
 ## 🤝 贡献
@@ -243,7 +248,7 @@ support_img2video = true
 ## 🙏 致谢
 - MaiBot - 优秀的 AI 机器人框架
 
-- 火山引擎、阿里云、智谱 - 提供强大的视频生成 API
+- 火山引擎、阿里云、智谱、可灵 - 提供强大的视频生成 API
 
 - 如果这个插件对你有帮助，请给个 ⭐ Star 支持一下！
 

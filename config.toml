@@ -1,26 +1,28 @@
 # video_generator_plugin - 自动生成的配置文件
-# 支持文生视频/图生视频的多服务商视频生成插件，支持预设模板、热切换模型、任务队列等功能
+# 支持多服务商的AI视频生成插件，提供文生视频、图生视频、首尾帧控制等功能，支持火山引擎、阿里云、可灵、智谱等服务商
 
-# ConfigSection(title='插件设置', description='插件基本配置', icon='settings', collapsed=False, order=1)
+# ConfigSection(title='插件设置', description='插件的基本配置项', icon='settings', collapsed=False, order=1)
 [plugin]
 
 # 是否启用插件
 enabled = true
 
 # 配置版本号
-config_version = "2.1.0"
+config_version = "2.2.0"
 
 
-# ConfigSection(title='管理员设置', description='管理员权限配置', icon='shield', collapsed=False, order=2)
+# ConfigSection(title='管理员设置', description='配置拥有管理权限的用户', icon='shield', collapsed=False, order=2)
 [admin]
 
-# 管理员用户ID列表
-admin_users = []
+# 拥有管理权限的用户 QQ 号列表
+admin_users = [""]
 
-# ConfigSection(title='生成设置', description='视频生成的默认参数', icon='video', collapsed=False, order=3)
+
+# ConfigSection(title='生成设置', description='视频生成的默认参数配置', icon='video', collapsed=False, order=3)
 [generation]
 
-# 默认模型ID
+# 默认使用的模型 ID
+# 可选值: model1, model2, model3, model4
 default_model = "model1"
 
 # 默认分辨率
@@ -35,82 +37,92 @@ default_fps = 24
 default_duration = 5
 
 
-# ConfigSection(title='队列设置', description='任务队列相关配置', icon='list', collapsed=False, order=4)
+# ConfigSection(title='队列设置', description='任务队列与轮询相关配置', icon='list', collapsed=False, order=4)
 [queue]
 
-# 最大队列长度
+# 最大任务队列长度
 max_queue_size = 10
 
-# 任务超时（秒）
+# 单个任务的最大等待时间（秒）
 task_timeout = 600
 
 # 基础轮询间隔（秒）
 poll_interval = 5
 
-# 自动清理完成任务
+# 自动清理已完成的任务记录
 auto_cleanup = true
 
-# 清理延迟（秒）
+# 完成任务保留时间（秒）
 cleanup_delay = 3600
 
 
-# ConfigSection(title='预设模板', description='视频生成预设模板配置', icon='layout', collapsed=False, order=5)
+# ConfigSection(title='预设模板', description='配置视频生成的预设模板，支持关键词快速调用', icon='layout', collapsed=False, order=5)
 [templates]
 
-# 启用预设模板
+# 是否启用预设模板功能
 enable_templates = true
 
 # 预设模板列表
-template_list = [{ keyword = "日落", description = "唯美日落场景", prompt = "金色的夕阳缓缓落入海平面，天空呈现出橙红色的渐变", resolution = "1080p", fps = 24, duration = 5 }]
+template_list = [{ keyword = "日落", description = "唯美日落场景", prompt = "金色的夕阳缓缓落入海平面，天空呈现出橙红色的渐变，海面波光粼粼", resolution = "1080p", fps = 24, duration = 5 }, { keyword = "星空", description = "璀璨星空延时", prompt = "深邃的夜空中繁星闪烁，银河横跨天际，流星划过", resolution = "1080p", fps = 24, duration = 5 }]
 
 
-# ConfigSection(title='多模型配置', description='配置多个视频生成模型', icon='cpu', collapsed=False, order=6)
+# ConfigSection(title='多模型配置', description='配置多个视频生成模型，支持运行时切换', icon='cpu', collapsed=False, order=6)
 [models]
 
 # 配置说明
-hint = "以下是模型配置，支持: volcengine, aliyun, zhipu, openai"
+hint = "以下配置多个视频生成模型，支持的服务商：volcengine（火山引擎）、aliyun（阿里云）、zhipu（智谱）、openai（OpenAI兼容）、kling（可灵）"
 
 
-# ConfigSection(title='模型1 - 火山引擎豆包', description='火山引擎豆包视频生成模型', icon='box', collapsed=False, order=7)
-
+# ConfigSection(title='模型1 - 火山引擎豆包', description='火山引擎豆包视频生成模型，支持文生视频、图生视频、首尾帧控制、背景音乐', icon='box', collapsed=False, order=7)
 [models.model1]
-name = "豆包视频生成"  # 模型名称
-base_url = "https://ark.cn-beijing.volces.com/api/v3"  # API地址
-api_key = ""  # API密钥
-format = "volcengine"  # API格式，可选值: volcengine, aliyun, zhipu, openai
-model = "doubao-seedance-1-5-pro-251215"  # 模型名
-default_resolution = "720p"  # 默认分辨率，可选值: 480p, 720p, 1080p
-default_duration = 5  # 默认时长
-prompt_extend = true  # 提示词扩展
-watermark = false  # 添加水印
-support_img2video = true  # 支持图生视频
+name = "豆包视频生成"  # 模型显示名称
+format = "volcengine"  # 可选值: volcengine, aliyun, zhipu, openai, kling
+base_url = "https://ark.cn-beijing.volces.com/api/v3"  # API 基础地址
+api_key = ""  # API 密钥，支持 ${ENV_VAR} 格式从环境变量读取 (必需)
+model = "doubao-seedance-1-5-pro-251215"  # 模型标识符
+default_resolution = "720p"  # 该模型的默认分辨率，可选值: 720p, 1080p
+default_duration = 5  # 该模型的默认时长（秒）
+prompt_extend = true  # 是否启用提示词扩展优化
+watermark = false  # 是否添加服务商水印
+support_img2video = true  # 是否支持图生视频功能
 
-# ConfigSection(title='模型2 - 阿里云通义万相', description='阿里云通义万相文生视频', icon='box', collapsed=False, order=8)
 
 [models.model2]
-name = "通义万相视频"  # 模型名称
-base_url = "https://dashscope.aliyuncs.com/api/v1"  # API地址
-api_key = ""  # API密钥
-format = "aliyun"  # API格式，可选值: volcengine, aliyun, zhipu, openai
-model = "wan2.5-i2v-plus"  # 模型名
-default_resolution = "720p"  # 默认分辨率，可选值: 480p, 720p, 1080p
-default_duration = 5  # 默认时长
-prompt_extend = true  # 提示词扩展
-watermark = false  # 添加水印
-support_img2video = true  # 支持图生视频
+name = "通义万相视频"  # 模型显示名称
+format = "aliyun"  # 可选值: volcengine, aliyun, zhipu, openai, kling
+base_url = "https://dashscope.aliyuncs.com/api/v1"  # API 基础地址
+api_key = ""  # API 密钥，支持 ${ENV_VAR} 格式从环境变量读取 (必需)
+model = "wan2.5-i2v-plus"  # 模型标识符
+default_resolution = "720p"  # 该模型的默认分辨率，可选值: 720p, 1080p
+default_duration = 5  # 该模型的默认时长（秒）
+prompt_extend = true  # 是否启用提示词扩展优化
+watermark = false  # 是否添加服务商水印
+support_img2video = true  # 是否支持图生视频功能
 
-# ConfigSection(title='模型3 - 智谱CogVideoX', description='智谱CogVideoX视频生成', icon='box', collapsed=False, order=9)
 
 [models.model3]
-name = "智谱CogVideoX"  # 模型名称
-base_url = "https://open.bigmodel.cn/api"  # API地址
-api_key = ""  # API密钥
-format = "zhipu"  # API格式，可选值: volcengine, aliyun, zhipu, openai
-model = "cogvideox-3"  # 模型名
-default_resolution = "1080p"  # 默认分辨率，可选值: 480p, 720p, 1080p
-default_duration = 5  # 默认时长
-prompt_extend = true  # 提示词扩展
-watermark = false  # 添加水印
-support_img2video = true  # 支持图生视频
+name = "智谱CogVideoX"  # 模型显示名称
+format = "zhipu"  # 可选值: volcengine, aliyun, zhipu, openai, kling
+base_url = "https://open.bigmodel.cn/api"  # API 基础地址
+api_key = ""  # API 密钥，支持 ${ENV_VAR} 格式从环境变量读取 (必需)
+model = "cogvideox-3"  # 模型标识符
+default_resolution = "1080p"  # 该模型的默认分辨率，可选值: 720p, 1080p
+default_duration = 5  # 该模型的默认时长（秒
+prompt_extend = true  # 是否启用提示词扩展优化
+watermark = false  # 是否添加服务商水印
+support_img2video = true  # 是否支持图生视频功能
+
+
+[models.model4]
+name = "可灵视频生成"  # 模型显示名称
+format = "kling"  # 可选值: volcengine, aliyun, zhipu, openai, kling
+base_url = "https://api-beijing.klingai.com"  # API 基础地址
+api_key = ""  # API 密钥，支持 ${ENV_VAR} 格式从环境变量读取 (必需)
+model = "kling-v1-6"  # 模型标识符
+default_resolution = "720p"  # 该模型的默认分辨率，可选值: 720p, 1080p
+default_duration = 5  # 该模型的默认时长（秒
+prompt_extend = true  # 是否启用提示词扩展优化
+watermark = false  # 是否添加服务商水印
+support_img2video = true  # 是否支持图生视频功能
 
 

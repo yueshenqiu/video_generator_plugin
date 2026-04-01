@@ -59,6 +59,62 @@ class VideoGeneratorPlugin(BasePlugin):
             (VideoGeneratorCommand.get_command_info(), VideoGeneratorCommand),
         ]
 
+    def generate_default_config(self) -> str:
+        """生成带详细注释的配置文件"""
+        lines = [
+            "# video_generator_plugin - 自动生成的配置文件",
+            "# 支持文生视频/图生视频的多服务商视频生成插件,支持预设模板、热切换模型、任务队列等功能",
+            ""
+        ]
+        
+        # 按 order 排序 sections
+        sections_order = sorted(
+            self.config_section_descriptions.items(),
+            key=lambda x: x[1].order
+        )
+        
+        for section_key, section_info in sections_order:
+            # 添加 ConfigSection 注释
+            lines.append(f"# ConfigSection(title='{section_info.title}', description='{section_info.description}', icon='{section_info.icon}', collapsed={section_info.collapsed}, order={section_info.order})")
+            lines.append(f"[{section_key}]")
+            lines.append("")
+            
+            # 获取该 section 的字段
+            section_fields = self.config_schema.get(section_key, {})
+            
+            # 按 order 排序字段
+            fields_order = sorted(
+                section_fields.items(),
+                key=lambda x: x[1].order
+            )
+            
+            for field_key, field_info in fields_order:
+                # 添加字段注释
+                if field_info.description:
+                    lines.append(f"# {field_info.description}")
+                
+                # 根据类型生成值
+                value = field_info.default
+                if isinstance(value, str):
+                    lines.append(f'{field_key} = "{value}"')
+                elif isinstance(value, bool):
+                    lines.append(f'{field_key} = {str(value).lower()}')
+                elif isinstance(value, (int, float)):
+                    lines.append(f'{field_key} = {value}')
+                elif isinstance(value, list):
+                    if not value:
+                        lines.append(f'{field_key} = []')
+                    else:
+                        # 格式化列表
+                        import json
+                        lines.append(f'{field_key} = {json.dumps(value, ensure_ascii=False)}')
+                else:
+                    lines.append(f'{field_key} = {repr(value)}')
+                
+                lines.append("")
+        
+        return "\n".join(lines)
+
     def _ensure_initialized(self) -> bool:
         """确保插件已初始化"""
         if self.task_manager is not None:

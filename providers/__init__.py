@@ -28,12 +28,14 @@ def _load_providers():
     from .volcengine import VolcengineProvider
     from .zhipu import ZhipuProvider
     from .openai_compatible import OpenAICompatibleProvider
+    from .kling import KlingProvider
     
     _provider_classes = {
         "aliyun": AliyunProvider,
         "volcengine": VolcengineProvider,
         "zhipu": ZhipuProvider,
         "openai": OpenAICompatibleProvider,
+        "kling": KlingProvider,
     }
     return _provider_classes
 

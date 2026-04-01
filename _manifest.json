@@ -1,8 +1,8 @@
 {
   "manifest_version": 1,
   "name": "视频生成插件",
-  "version": "1.0.0",
-  "description": "支持多服务商的AI视频生成插件，提供文生视频、图生视频、首尾帧控制等功能，支持火山引擎、阿里云、智谱等服务商",
+  "version": "2.1.2",
+  "description": "支持多服务商的AI视频生成插件，提供文生视频、图生视频、首尾帧控制等功能，支持火山引擎、阿里云、可灵、智谱等服务商",
   "author": {
     "name": "三花",
     "url": "https://github.com/yueshenqiu"
@@ -14,17 +14,18 @@
   "homepage_url": "https://github.com/yueshenqiu/video_generator_plugin",
   "repository_url": "https://github.com/yueshenqiu/video_generator_plugin",
   "keywords": [
-    "video",
-    "generation",
-    "text-to-video",
-    "image-to-video",
-    "AI",
     "视频生成",
     "文生视频",
     "图生视频",
     "豆包",
     "通义万相",
-    "CogVideoX"
+    "CogVideoX",
+    "可灵kling",
+    "video",
+    "generation",
+    "text-to-video",
+    "image-to-video",
+    "AI"
   ],
   "categories": [
     "Content Generation",

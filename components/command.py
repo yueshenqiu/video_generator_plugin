@@ -14,6 +14,10 @@ from . import get_plugin, get_task_manager, get_video_generator, get_template_ma
 
 logger = get_logger("video_generator.command")
 
+# 固定的有效参数值
+VALID_FPS = [24, 30]
+VALID_DURATION = [5, 10, 15]
+
 
 class VideoGeneratorCommand(BaseCommand):
     """视频生成命令"""
@@ -51,7 +55,6 @@ class VideoGeneratorCommand(BaseCommand):
             
             if not user_id:
                 return False
-            
             return user_id in admin_users
         except Exception:
             return False
@@ -154,9 +157,9 @@ class VideoGeneratorCommand(BaseCommand):
             model_text += f"   📛 {model['name']}\n"
             model_text += f"   🏢 {model['format']} {api_mark} {img2video_mark}\n\n"
 
-        model_text += "图例: ✅当前 🔑已配置 🖼️支持图生视频\n"
-        model_text += "💡 /vg w <模型ID> 切换模型\n"
-        model_text += "💡 /vg caps <模型ID> 查看能力"
+        model_text += "图例:✅当前 🔑已配置 🖼️支持图生视频\n"
+        model_text += "💡 /vg w<模型ID> 切换模型\n"
+        model_text += "💡 /vg caps<模型ID> 查看能力"
         
         await self.send_text(model_text)
         return True, "显示模型", True
@@ -168,7 +171,6 @@ class VideoGeneratorCommand(BaseCommand):
             await self.send_text("❌ 视频生成器未初始化")
             return False, "未初始化", True
 
-        # 如果指定了模型ID，显示该模型的能力
         if args:
             model_id = args[0]
             model_config = video_generator.get_model_config(model_id)
@@ -182,7 +184,6 @@ class VideoGeneratorCommand(BaseCommand):
             else:
                 caps_text = self._format_basic_model_info(model_id, model_config)
         else:
-            # 显示当前模型的能力
             model_id = video_generator.get_current_model_id()
             model_config = video_generator.get_current_model_config()
             caps = video_generator.get_model_capabilities(model_id)
@@ -199,7 +200,6 @@ class VideoGeneratorCommand(BaseCommand):
         """格式化模型能力信息"""
         name = config.get("name", model_id)
         
-        # 视频特性
         video_features = caps.get("video_features", [])
         feature_icons = {
             "TEXT_TO_VIDEO": "📝 文生视频",
@@ -214,12 +214,11 @@ class VideoGeneratorCommand(BaseCommand):
         features_text = ""
         for feature in video_features:
             icon = feature_icons.get(feature, f"• {feature}")
-            features_text += f"  {icon}\n"
+            features_text += f"{icon}\n"
         
         if not features_text:
             features_text = "  暂无信息\n"
         
-        # 音频特性
         audio_features = caps.get("audio_features", [])
         audio_icons = {
             "BACKGROUND_MUSIC": "🎵 背景音乐",
@@ -236,7 +235,6 @@ class VideoGeneratorCommand(BaseCommand):
         if not audio_text:
             audio_text = "  ❌ 不支持音频\n"
         
-        # 分辨率和时长
         resolutions = caps.get("resolutions", ["720p", "1080p"])
         duration_range = caps.get("duration_range", "5秒")
         fps_list = caps.get("fps", [24, 30])
@@ -293,7 +291,7 @@ class VideoGeneratorCommand(BaseCommand):
                 template_text += f" - {description}"
             template_text += "\n"
 
-        template_text += f"\n共 {len(templates)} 个模板\n"
+        template_text += f"\n共{len(templates)} 个模板\n"
         template_text += "💡 /vg <关键词> 快速生成"
         
         await self.send_text(template_text)
@@ -356,7 +354,7 @@ class VideoGeneratorCommand(BaseCommand):
         if success:
             model_config = video_generator.get_model_config(model_id)
             model_name = model_config.get("name", model_id) if model_config else model_id
-            await self.send_text(f"✅ 已切换到: {model_name}\n💡 /vg caps 查看模型能力")
+            await self.send_text(f"✅ 已切换到: {model_name}\n💡 /vg caps查看模型能力")
             logger.info(f"[Command] 切换模型: {model_id}")
             return True, f"切换模型 {model_id}", True
         else:
@@ -398,7 +396,6 @@ class VideoGeneratorCommand(BaseCommand):
             await self.send_text("❌ 任务管理器未初始化")
             return False, "任务管理器未初始化", True
 
-        # 默认参数
         default_resolution = plugin.get_config("generation.default_resolution", "720p")
         default_fps = plugin.get_config("generation.default_fps", 24)
         default_duration = plugin.get_config("generation.default_duration", 5)
@@ -446,11 +443,11 @@ class VideoGeneratorCommand(BaseCommand):
             elif arg_lower in MUSIC_STYLES:
                 music_enabled = True
                 music_style = arg_lower
-            elif arg.isdigit() and int(arg) in ResolutionValidator.VALID_FPS:
+            elif arg.isdigit() and int(arg) in VALID_FPS:
                 fps = int(arg)
             elif arg.isdigit():
                 parsed = ResolutionValidator.parse_duration(arg)
-                if parsed and int(arg) not in ResolutionValidator.VALID_FPS:
+                if parsed and int(arg) not in VALID_FPS:
                     duration = parsed
                 else:
                     prompt_parts.append(arg)
@@ -470,7 +467,6 @@ class VideoGeneratorCommand(BaseCommand):
             await self.send_text("❌ 请提供视频描述\n💡 /vg help 查看帮助")
             return False, "未提供描述", True
 
-        # 检查模板
         is_template = False
         template_manager = get_template_manager()
         if template_manager:
@@ -489,7 +485,6 @@ class VideoGeneratorCommand(BaseCommand):
             await self.send_text("❌ 无法获取聊天信息")
             return False, "无法获取chat_id", True
 
-        # 图片处理
         image_processor = ImageProcessor(self)
         first_frame_url = None
         last_frame_url = None
@@ -526,7 +521,6 @@ class VideoGeneratorCommand(BaseCommand):
                 task_type = "image2video"
                 mode_text = "图生视频"
 
-        # 提交任务
         task_id = await task_manager.submit_task(
             task_type=task_type,
             prompt=video_prompt,
@@ -539,8 +533,7 @@ class VideoGeneratorCommand(BaseCommand):
             user_id=user_id or "",
             music_enabled=music_enabled,
             music_style=music_style,
-            music_volume=music_volume,
-        )
+            music_volume=music_volume,)
 
         if task_id:
             queue_position = task_manager.get_queue_position(task_id)
@@ -549,7 +542,7 @@ class VideoGeneratorCommand(BaseCommand):
             
             msg = f"✨ {mode_text}已提交！\n{template_text}{music_text}📋 ID: {task_id}\n"
             if queue_position > 0:
-                msg += f"⏳ 排队: 第{queue_position}位\n"
+                msg += f"⏳ 排队:第{queue_position}位\n"
             msg += "💡 /vg s 查看进度"
             
             await self.send_text(msg)

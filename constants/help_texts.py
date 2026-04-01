@@ -30,7 +30,9 @@ HELP_TEXT = """📹 视频生成插件帮助
 
 【管理命令】
 /vg w <模型ID> - 切换模型
-/vg d <任务ID> - 取消任务"""
+/vg d <任务ID> - 取消任务
+
+⚠️ 不同服务商支持能力不同（分辨率/帧率/音乐/取消任务等）"""
 
 
 MUSIC_STYLES_TEXT = """🎵 背景音乐风格
@@ -94,5 +96,10 @@ PROVIDER_INFO = {
         "name": "OpenAI 兼容",
         "description": "兼容 OpenAI 格式的第三方服务",
         "doc_url": "",
+    },
+    "kling": {
+        "name": "可灵 Kling",
+        "description": "支持文生/图生（含首尾帧），部分模型支持声音",
+        "doc_url": "https://app.klingai.com/global/dev/document-api",
     },
 }

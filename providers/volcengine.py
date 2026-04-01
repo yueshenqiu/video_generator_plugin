@@ -45,6 +45,22 @@ class VolcengineProvider(BaseProvider):
     ) -> str:
         """创建视频生成任务"""
         
+        # 根据模型调整时长限制
+        if "2-0" in model or "2.0" in model:
+            max_duration = 15
+        else:
+            max_duration = 12
+        
+        min_duration = 4
+        original_duration = duration
+        
+        if duration > max_duration:
+            duration = max_duration
+            logger.info(f"[VolcengineProvider] 时长已调整: {original_duration}s -> {duration}s")
+        elif duration < min_duration:
+            duration = min_duration
+            logger.info(f"[VolcengineProvider] 时长已调整: {original_duration}s -> {duration}s")
+        
         # 验证参数
         has_first = bool(image_url)
         has_last = bool(last_frame_url)
