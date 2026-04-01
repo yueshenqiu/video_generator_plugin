@@ -2,7 +2,7 @@
 
 <div align="center">
 
-![Version](https://img.shields.io/badge/version-1.0.0-blue.svg)
+![Version](https://img.shields.io/badge/version-2.1.2-blue.svg)
 ![License](https://img.shields.io/badge/license-GPL--3.0-green.svg)
 ![MaiBot](https://img.shields.io/badge/MaiBot-0.12.0+-orange.svg)
 
@@ -233,10 +233,10 @@ support_img2video = true
 ```
 ### 更新简介
 #### 2.1.2
-新增**可灵kling**服务商
-新增火山引擎豆包视频生成模型**doubao-seedance-2-0**的完美适配（假的）
-修复部分参数传递不正确等已知BUG
-后续会慢慢增加视频延长，音频等功能
+- 新增**可灵kling**服务商
+- 新增火山引擎豆包视频生成模型**doubao-seedance-2-0**的完美适配（假的）
+- 修复部分参数传递不正确等已知BUG
+- 后续会慢慢增加视频延长，音频等功能
 
 
 ## 🤝 贡献
