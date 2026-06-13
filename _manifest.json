@@ -1,0 +1,33 @@
+{
+  "manifest_version": 2,
+  "id": "com.yueshenqiu.video-generator",
+  "version": "2.2.0",
+  "name": "视频生成插件",
+  "description": "支持多服务商的AI视频生成插件，提供文生视频、图生视频、首尾帧控制等功能，支持火山引擎、阿里云、可灵、智谱等服务商",
+  "author": {
+    "name": "三花",
+    "url": "https://github.com/yueshenqiu"
+  },
+  "license": "GPL-3.0",
+  "urls": {
+    "repository": "https://github.com/yueshenqiu/video_generator_plugin"
+  },
+  "host_application": {
+    "min_version": "1.0.0",
+    "max_version": "1.99.99"
+  },
+  "sdk": {
+    "min_version": "1.0.0",
+    "max_version": "2.99.99"
+  },
+  "capabilities": [
+    "send.text",
+    "send.custom",
+    "message.get_recent",
+    "message.get_by_id",
+    "api.call"
+  ],
+  "i18n": {
+    "default_locale": "zh-CN"
+  }
+}
